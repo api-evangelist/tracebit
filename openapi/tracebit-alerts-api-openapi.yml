@@ -1,0 +1,485 @@
+openapi: 3.1.1
+info:
+  title: Tracebit Alerts API
+  description: API for interacting with the Tracebit platform.
+  version: v1
+servers:
+- url: https://community.tracebit.com
+  description: Tracebit Community Edition server
+tags:
+- name: Alerts
+paths:
+  /api/v1/alerts:
+    get:
+      tags:
+      - Alerts
+      summary: List Alerts
+      description: 'List alerts ordered by start time. Returns up to 1000 alerts.
+
+
+        Required permission: `alerts:all:list`.'
+      operationId: ListAlerts
+      parameters:
+      - name: order
+        in: query
+        description: Sort direction by start time. 'desc' (default) returns newest first, 'asc' returns oldest first.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAlertsResponse'
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                type: string
+      security:
+      - TracebitApiToken: []
+  /api/v1/alerts/{id}/logs:
+    get:
+      tags:
+      - Alerts
+      summary: Get Alert Logs
+      description: 'Get an alert''s logs
+
+
+        Required permission: `alerts:all:get`.'
+      operationId: GetAlertLogs
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier for the alert.
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: beforeTime
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: beforeLog
+        in: query
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAlertLogsResponse'
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                type: string
+      security:
+      - TracebitApiToken: []
+components:
+  schemas:
+    OktaPrincipal:
+      required:
+      - id
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+        alternate_id:
+          type:
+          - 'null'
+          - string
+        type:
+          type: string
+    Principal:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        aws:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/AwsPrincipal'
+        okta:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/OktaPrincipal'
+        azure:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/AzurePrincipal'
+        google_cloud:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/GoogleCloudPrincipal'
+    AzurePrincipal:
+      type: object
+      properties:
+        app_id:
+          type:
+          - 'null'
+          - string
+        tenant_id:
+          type:
+          - 'null'
+          - string
+    AwsPrincipal:
+      required:
+      - type
+      type: object
+      properties:
+        account_id:
+          type:
+          - 'null'
+          - string
+        type:
+          type: string
+        arn:
+          type:
+          - 'null'
+          - string
+        username:
+          type:
+          - 'null'
+          - string
+    GetAlertLogsResponse:
+      required:
+      - logs
+      type: object
+      properties:
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertLogInformation'
+          description: A page of logs associated with the alert
+        next_page:
+          type:
+          - 'null'
+          - string
+          description: URL for the next page of results
+    Classification:
+      enum:
+      - Unclassified
+      - TruePositive
+      - BenignPositive
+      - FalsePositive
+    UserAgent:
+      required:
+      - raw
+      - label
+      type: object
+      properties:
+        raw:
+          type: string
+        label:
+          type: string
+    Request:
+      type: object
+      properties:
+        user_agent:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UserAgent'
+        ip:
+          type:
+          - 'null'
+          - string
+    AlertIndicatorInformation:
+      required:
+      - id
+      - name
+      - description
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        details:
+          type:
+          - 'null'
+          - object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    AwsCanary:
+      required:
+      - account_id
+      - account_name
+      - arn
+      - region
+      type: object
+      properties:
+        account_id:
+          type: string
+        account_name:
+          type: string
+        arn:
+          type: string
+        region:
+          type:
+          - 'null'
+          - string
+    AzureCanary:
+      required:
+      - subscription_id
+      - subscription_name
+      - resource_id
+      type: object
+      properties:
+        subscription_id:
+          type: string
+        subscription_name:
+          type: string
+        resource_id:
+          type: string
+    Severity:
+      enum:
+      - Info
+      - Medium
+      - High
+    OktaCanary:
+      required:
+      - domain
+      - organization_id
+      type: object
+      properties:
+        domain:
+          type: string
+        organization_id:
+          type: string
+    Resource:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type:
+          - 'null'
+          - string
+    Label:
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    AlertInformation:
+      type: object
+      properties:
+        id:
+          type: string
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type:
+          - 'null'
+          - string
+          format: date-time
+        classification:
+          $ref: '#/components/schemas/Classification'
+        classification_reason:
+          type:
+          - 'null'
+          - string
+        severity:
+          $ref: '#/components/schemas/Severity'
+        provider:
+          type: string
+        provider_account_id:
+          type: string
+        title:
+          type: string
+        tracebit_portal_url:
+          type: string
+        logs_url:
+          type:
+          - 'null'
+          - string
+        indicators:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertIndicatorInformation'
+    AlertLogInformation:
+      type: object
+      properties:
+        id:
+          type: string
+        alert_id:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        severity:
+          $ref: '#/components/schemas/Severity'
+        canary_credential:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/CanaryCredential'
+        canary:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Canary'
+        principal:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Principal'
+        event:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Event'
+    EventOutcome:
+      required:
+      - result
+      type: object
+      properties:
+        result:
+          type: string
+        code:
+          type:
+          - 'null'
+          - string
+        message:
+          type:
+          - 'null'
+          - string
+    Canary:
+      required:
+      - tracebit_id
+      - provider_id
+      - provider_account_id
+      - name
+      - type
+      - deployed_at
+      type: object
+      properties:
+        tracebit_id:
+          type: string
+        provider_id:
+          type: string
+        provider_account_id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        deployed_at:
+          type: string
+          format: date-time
+        aws:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/AwsCanary'
+        okta:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/OktaCanary'
+        azure:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/AzureCanary'
+    CanaryCredential:
+      required:
+      - name
+      - type
+      - labels
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        issued_at:
+          type: string
+          format: date-time
+        expires_at:
+          type:
+          - 'null'
+          - string
+          format: date-time
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        aws:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/AwsCanaryCredential'
+    ListAlertsResponse:
+      required:
+      - alerts
+      type: object
+      properties:
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertInformation'
+          description: The alerts
+    AwsCanaryCredential:
+      required:
+      - access_key_id
+      type: object
+      properties:
+        access_key_id:
+          type: string
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+        operation:
+          type: string
+        request:
+          $ref: '#/components/schemas/Request'
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resource'
+        outcome:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/EventOutcome'
+    GoogleCloudPrincipal:
+      type: object
+      properties:
+        federated_identity_type:
+          type:
+          - 'null'
+          - string
+        federated_identity_pool:
+          type:
+          - 'null'
+          - string
+        federated_identity_subject:
+          type:
+          - 'null'
+          - string
+  securitySchemes:
+    TracebitApiToken:
+      type: http
+      scheme: bearer
