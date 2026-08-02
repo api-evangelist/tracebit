@@ -1,0 +1,36 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tracebit-community-openapi-original.json
+docs: https://community.tracebit.com/api-docs
+notes: >-
+  The Tracebit API (Community Edition) authenticates with an API token sent as an
+  HTTP bearer token. API tokens are created in the Tracebit Community portal
+  (community.tracebit.com) and carry granular permissions referenced per operation
+  in the OpenAPI descriptions (e.g. canary-credentials:all:create, alerts:all:list,
+  alerts:all:get). The enterprise product docs (docs.tracebit.com) are
+  login-gated (HTTP 401). The host also publishes an OpenID Connect discovery
+  document at /.well-known/openid-configuration for its user login surface.
+summary:
+  types:
+  - http
+  http_schemes:
+  - bearer
+  oauth2_flows: []
+  api_key_in: []
+permissions:
+- permission: canary-credentials:all:create
+  operations:
+  - IssueCredentials
+  - ConfirmCredentials
+- permission: alerts:all:list
+  operations:
+  - ListAlerts
+- permission: alerts:all:get
+  operations:
+  - GetAlertLogs
+schemes:
+- name: TracebitApiToken
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/tracebit-community-openapi-original.json

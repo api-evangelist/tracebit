@@ -1,8 +1,14 @@
 aid: tracebit
 name: Tracebit
-description: 'Tracebit is a company surfaced as a portfolio company of accel and added to the API Evangelist
-  network as a stub for enrichment. Sector: cloud-saas. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  Tracebit is a security-canary (deception) platform backed by Accel. It deploys
+  realistic decoy credentials, secrets, and identities — canaries — across AWS,
+  Azure, Google Cloud, Okta, Kubernetes, CI/CD pipelines, and workstations, and
+  raises high-fidelity alerts the moment an attacker touches one during lateral
+  movement or credential access. The free Community Edition exposes a public
+  REST API (OpenAPI 3.1) for issuing and confirming canary credentials and
+  reading alerts and their logs, alongside an open-source CLI, a GitHub Action,
+  and a provider-published Agent Skill.
 url: https://raw.githubusercontent.com/api-evangelist/tracebit/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,13 +16,61 @@ x-backed-by:
 - accel
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://cdn.prod.website-files.com/663e4960fd682070c6a1bfdc/6a16ecb79f26e0be2459ffbd_tracebit-opengraph-home.jpg
 tags:
 - Company
 - Cloud Saas
-apis: []
+- Security
+- Deception
+- Canary Tokens
+- Threat Detection
+- Cloud Security
+- Incident Response
+apis:
+- aid: tracebit:tracebit-alerts-api
+  name: Tracebit Alerts API
+  description: The Alerts API from Tracebit — 2 operation(s) for alerts.
+  humanURL: https://community.tracebit.com/api-docs/
+  baseURL: https://community.tracebit.com
+  tags:
+  - Alerts
+  properties:
+  - type: OpenAPI
+    url: openapi/tracebit-alerts-api-openapi.yml
+  - type: Documentation
+    url: https://community.tracebit.com/api-docs/
+- aid: tracebit:tracebit-canary-credentials-api
+  name: Tracebit Canary Credentials API
+  description: The Canary Credentials API from Tracebit — 2 operation(s) for canary credentials.
+  humanURL: https://community.tracebit.com/api-docs/
+  baseURL: https://community.tracebit.com
+  tags:
+  - Canary Credentials
+  properties:
+  - type: OpenAPI
+    url: openapi/tracebit-canary-credentials-api-openapi.yml
+  - type: Documentation
+    url: https://community.tracebit.com/api-docs/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -25,3 +79,59 @@ maintainers:
 common:
 - type: Website
   url: https://tracebit.com/
+- type: DeveloperPortal
+  url: https://community.tracebit.com/
+- type: Documentation
+  url: https://community.tracebit.com/api-docs/
+- type: APIReference
+  url: https://community.tracebit.com/api-docs/
+- type: GettingStarted
+  url: https://github.com/tracebit-com/tracebit-community-cli#getting-started
+- type: Support
+  url: https://tracebit.com/contact
+- type: Blog
+  url: https://tracebit.com/blog
+- type: GitHubOrganization
+  url: https://github.com/tracebit-com
+- type: Pricing
+  url: https://tracebit.com/pricing
+- type: SignUp
+  url: https://community.tracebit.com/join
+- type: TermsOfService
+  url: https://tracebit.com/legal/terms-and-conditions
+- type: PrivacyPolicy
+  url: https://tracebit.com/legal/privacy-policy
+- type: StatusPage
+  url: https://status.tracebit.com/
+- type: TrustCenter
+  url: security/tracebit-trust-center.yml
+- type: DomainSecurity
+  url: security/tracebit-domain-security.yml
+- type: Authentication
+  url: authentication/tracebit-authentication.yml
+- type: Conventions
+  url: conventions/tracebit-conventions.yml
+- type: ErrorCatalog
+  url: errors/tracebit-problem-types.yml
+- type: Conformance
+  url: conformance/tracebit-conformance.yml
+- type: Lifecycle
+  url: lifecycle/tracebit-lifecycle.yml
+- type: ChangeLog
+  url: changelog/tracebit-changelog.yml
+- type: CLI
+  url: cli/tracebit-cli.yml
+- type: Packages
+  url: packages/tracebit-packages.yml
+- type: WellKnown
+  url: well-known/tracebit-well-known.yml
+- type: DataModel
+  url: data-model/tracebit-data-model.yml
+- type: Overlay
+  url: overlays/tracebit-community-overlay.yaml
+- type: MCPServer
+  url: mcp/tracebit-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/tracebit-llms.txt

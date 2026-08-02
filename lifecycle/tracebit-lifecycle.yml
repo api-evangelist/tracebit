@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: searched
+source: https://status.tracebit.com/
+notes: >-
+  Status page verified live (Atlassian Statuspage, titled "Tracebit Platform").
+  API versioning derived from the OpenAPI (uri-path /api/v1/). No public
+  deprecation policy, Sunset-header support, or SLA page was found; the
+  enterprise docs are login-gated. CLI releases are dated on GitHub
+  (see changelog/tracebit-changelog.yml).
+versioning:
+  scheme: uri-path
+  current: v1
+  source: openapi/tracebit-community-openapi-original.json
+deprecation: null
+sla: null
+status_page: https://status.tracebit.com/
+status_page_platform: Atlassian Statuspage
+deprecated_operations: []

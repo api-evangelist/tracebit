@@ -1,0 +1,44 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/tracebit-com/tracebit-community-cli
+notes: >-
+  First-party open-source (MIT) CLI for Tracebit Community Edition. Deploys and
+  maintains security canaries (fake credentials/assets) across devices and
+  accounts, and runs a background service that keeps deployed canary
+  credentials up to date. Current release 1.1.2 (2025-12-10); installers for
+  Windows, macOS, and Linux are distributed via GitHub Releases (12 assets per
+  release).
+name: tracebit
+repository: https://github.com/tracebit-com/tracebit-community-cli
+license: MIT
+current_version: 1.1.2
+install:
+- method: installer-download
+  url: https://github.com/tracebit-com/tracebit-community-cli/releases/latest
+  detail: Download the installer for your platform; on Linux run `bash install-tracebit-linux-<platform>`
+commands:
+- group: auth
+  commands:
+  - command: tracebit auth
+    description: Log in to the Tracebit Community CLI
+  - command: tracebit auth status
+    description: Show current authentication status
+- group: deploy
+  commands:
+  - command: tracebit deploy all
+    description: Deploy all canary types (AWS credentials, SSH keys, browser cookies, website passwords, emails)
+- group: misc
+  commands:
+  - command: tracebit --version
+    description: Print the CLI version
+flows:
+- name: Deploy canaries on a workstation
+  steps:
+  - Install the CLI from GitHub Releases
+  - tracebit auth
+  - tracebit deploy all
+  - The background service keeps canary credentials fresh; alerts surface in the Community portal
+related:
+- type: GitHubAction
+  url: https://github.com/tracebit-com/tracebit-community-action
+  description: GitHub Action that deploys canary credentials into GitHub workflows/pipelines to detect supply-chain attacks

@@ -1,0 +1,26 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tracebit-community-openapi-original.json
+format: plain-text
+notes: >-
+  Derived from the 4xx responses declared in the Tracebit Community API OpenAPI.
+  Error bodies are plain text (text/plain) or empty — the API does not use
+  RFC 9457 application/problem+json.
+problems:
+- status: 400
+  title: Bad Request
+  media_type: text/plain
+  source_operations:
+  - openapi/tracebit-community-openapi-original.json#IssueCredentials
+  - openapi/tracebit-community-openapi-original.json#ListAlerts
+  - openapi/tracebit-community-openapi-original.json#GetAlertLogs
+- status: 404
+  title: Not Found
+  media_type: text/plain
+  remediation: >-
+    For ConfirmCredentials, returned when the confirmationId does not match
+    credentials issued via /issue-credentials. For GetAlertLogs, returned when
+    the alert id (UUID) does not exist.
+  source_operations:
+  - openapi/tracebit-community-openapi-original.json#ConfirmCredentials
+  - openapi/tracebit-community-openapi-original.json#GetAlertLogs

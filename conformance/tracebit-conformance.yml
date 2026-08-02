@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tracebit-community-openapi-original.json
+notes: >-
+  Cross-cutting standards posture derived from the public Community Edition
+  OpenAPI and live host probes. The enterprise docs (docs.tracebit.com) are
+  login-gated, so enterprise-only claims are not asserted here. Compliance
+  certifications may exist on the Vanta-hosted trust center
+  (trust.tracebit.com) but its content is JS-rendered and was not
+  keyword-verifiable; none are asserted.
+standards:
+- id: oauth2
+  conforms: false
+  evidence: securitySchemes declare http bearer API tokens only; no oauth2 flows
+- id: oidc
+  conforms: true
+  evidence: community.tracebit.com serves /.well-known/openid-configuration (HTTP 200) for its login surface; the API itself uses bearer API tokens
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 4xx responses are text/plain, not application/problem+json
+- id: pagination
+  conforms: true
+  evidence: GetAlertLogs is cursor-paginated (beforeTime/beforeLog params, next_page URL in response)
+- id: idempotency
+  conforms: false
+  evidence: no Idempotency-Key mechanism; two-phase issue/confirm flow with confirmationId instead
+- id: json:api
+  conforms: false
+  evidence: plain JSON response shapes, no JSON:API envelope
+- id: openapi-3.1
+  conforms: true
+  evidence: published spec at https://community.tracebit.com/openapi.json is OpenAPI 3.1.1

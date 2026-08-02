@@ -1,0 +1,40 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Tracebit API
+  version: 1.0.0
+extends: openapi/tracebit-community-openapi-original.json
+x-provenance:
+  generated: '2026-07-21'
+  method: generated
+  source: openapi/tracebit-community-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist:
+      provider: tracebit
+      profile: https://raw.githubusercontent.com/api-evangelist/tracebit/refs/heads/main/apis.yml
+      notes: >-
+        Public OpenAPI for Tracebit Community Edition — security canary
+        (deception) platform. Two-phase credential issuance (issue then
+        confirm) and an alert/log read surface.
+- target: $.info
+  update:
+    contact:
+      name: Tracebit
+      url: https://tracebit.com/contact
+- target: $.paths['/api/v1/credentials/issue-credentials'].post
+  update:
+    x-action-class: acting
+    x-consequence: write
+- target: $.paths['/api/v1/credentials/confirm-credentials'].post
+  update:
+    x-action-class: acting
+    x-consequence: write
+- target: $.paths['/api/v1/alerts'].get
+  update:
+    x-action-class: connected
+    x-consequence: read
+- target: $.paths['/api/v1/alerts/{id}/logs'].get
+  update:
+    x-action-class: connected
+    x-consequence: read

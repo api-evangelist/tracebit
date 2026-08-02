@@ -1,0 +1,16 @@
+{
+  "provider": "tracebit",
+  "sources": [
+    "tracebit-alerts-api-openapi.yml",
+    "tracebit-canary-credentials-api-openapi.yml"
+  ],
+  "outputs": [
+    "tracebit-alerts-api-openapi.yml",
+    "tracebit-canary-credentials-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

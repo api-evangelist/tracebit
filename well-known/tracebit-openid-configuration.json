@@ -1,0 +1,1 @@
+{"id_token_signing_alg_values_supported":["RS512"],"issuer":"https://community.tracebit.com","jwks_uri":"https://community.tracebit.com/.well-known/jwks","response_types_supported":["id_token"],"subject_types_supported":["public"]}

@@ -1,0 +1,23 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/tracebit-com/tracebit-community-cli/releases
+scope: community-cli
+scheme: semver
+current_version: 1.1.2
+notes: >-
+  Tracebit publishes no public dated changelog for the platform or API
+  (tracebit.com/changelog is 404 and the enterprise docs are login-gated). The
+  Community CLI has dated semver releases on GitHub; recent window captured
+  here.
+entries:
+- version: 1.1.2
+  date: '2025-12-10'
+  breaking: false
+- version: 1.1.1
+  date: '2025-12-02'
+  breaking: false
+- version: 1.0.0
+  date: '2025-12-01'
+  breaking: false
+  highlights:
+  - Initial public release of the Tracebit Community CLI

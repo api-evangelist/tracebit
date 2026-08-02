@@ -1,0 +1,1117 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Tracebit API",
+    "description": "API for interacting with the Tracebit platform.",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://community.tracebit.com",
+      "description": "Tracebit Community Edition server"
+    }
+  ],
+  "paths": {
+    "/api/v1/credentials/issue-credentials": {
+      "post": {
+        "tags": [
+          "Canary Credentials"
+        ],
+        "summary": "Issue credentials",
+        "description": "Issue canary credentials of the requested types. The credentials should be confirmed via the /confirm-credentials endpoint after their appropriate deployment.\n\nRequired permission: `canary-credentials:all:create`.",
+        "operationId": "IssueCredentials",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueCredentialsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueCredentialsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "TracebitApiToken": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v1/credentials/confirm-credentials": {
+      "post": {
+        "tags": [
+          "Canary Credentials"
+        ],
+        "summary": "Confirm credentials deployment",
+        "description": "Confirm the successful deployment of canary credentials. Should be called with the confirmationId of the credentials issued via the /issue-credentials endpoint.\n\nRequired permission: `canary-credentials:all:create`.",
+        "operationId": "ConfirmCredentials",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmCredentialsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "TracebitApiToken": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v1/alerts": {
+      "get": {
+        "tags": [
+          "Alerts"
+        ],
+        "summary": "List Alerts",
+        "description": "List alerts ordered by start time. Returns up to 1000 alerts.\n\nRequired permission: `alerts:all:list`.",
+        "operationId": "ListAlerts",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Sort direction by start time. 'desc' (default) returns newest first, 'asc' returns oldest first.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListAlertsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "TracebitApiToken": [ ]
+          }
+        ]
+      }
+    },
+    "/api/v1/alerts/{id}/logs": {
+      "get": {
+        "tags": [
+          "Alerts"
+        ],
+        "summary": "Get Alert Logs",
+        "description": "Get an alert's logs\n\nRequired permission: `alerts:all:get`.",
+        "operationId": "GetAlertLogs",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique identifier for the alert.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "beforeTime",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "beforeLog",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAlertLogsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "TracebitApiToken": [ ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlertIndicatorInformation": {
+        "required": [
+          "id",
+          "name",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "details": {
+            "type": [
+              "null",
+              "object"
+            ],
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "AlertInformation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "start_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end_time": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "classification": {
+            "$ref": "#/components/schemas/Classification"
+          },
+          "classification_reason": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "severity": {
+            "$ref": "#/components/schemas/Severity"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "provider_account_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "tracebit_portal_url": {
+            "type": "string"
+          },
+          "logs_url": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "indicators": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlertIndicatorInformation"
+            }
+          }
+        }
+      },
+      "AlertLogInformation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "alert_id": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/Severity"
+          },
+          "canary_credential": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/CanaryCredential"
+              }
+            ]
+          },
+          "canary": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Canary"
+              }
+            ]
+          },
+          "principal": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Principal"
+              }
+            ]
+          },
+          "event": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/Event"
+              }
+            ]
+          }
+        }
+      },
+      "AwsCanary": {
+        "required": [
+          "account_id",
+          "account_name",
+          "arn",
+          "region"
+        ],
+        "type": "object",
+        "properties": {
+          "account_id": {
+            "type": "string"
+          },
+          "account_name": {
+            "type": "string"
+          },
+          "arn": {
+            "type": "string"
+          },
+          "region": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "AwsCanaryCredential": {
+        "required": [
+          "access_key_id"
+        ],
+        "type": "object",
+        "properties": {
+          "access_key_id": {
+            "type": "string"
+          }
+        }
+      },
+      "AwsCanaryCredentials": {
+        "required": [
+          "awsConfirmationId",
+          "awsAccessKeyId",
+          "awsExpiration",
+          "awsSecretAccessKey",
+          "awsSessionToken"
+        ],
+        "type": "object",
+        "properties": {
+          "awsConfirmationId": {
+            "type": "string",
+            "description": "The ID to use for confirming these credentials' deployment",
+            "format": "uuid"
+          },
+          "awsAccessKeyId": {
+            "type": "string",
+            "description": "The AWS access key ID"
+          },
+          "awsExpiration": {
+            "type": "string",
+            "description": "The date when these credentials will expire",
+            "format": "date-time"
+          },
+          "awsSecretAccessKey": {
+            "type": "string",
+            "description": "The AWS secret access key"
+          },
+          "awsSessionToken": {
+            "type": "string",
+            "description": "The AWS session token"
+          }
+        }
+      },
+      "AwsPrincipal": {
+        "required": [
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "account_id": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "type": {
+            "type": "string"
+          },
+          "arn": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "username": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "AzureCanary": {
+        "required": [
+          "subscription_id",
+          "subscription_name",
+          "resource_id"
+        ],
+        "type": "object",
+        "properties": {
+          "subscription_id": {
+            "type": "string"
+          },
+          "subscription_name": {
+            "type": "string"
+          },
+          "resource_id": {
+            "type": "string"
+          }
+        }
+      },
+      "AzurePrincipal": {
+        "type": "object",
+        "properties": {
+          "app_id": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "tenant_id": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "Canary": {
+        "required": [
+          "tracebit_id",
+          "provider_id",
+          "provider_account_id",
+          "name",
+          "type",
+          "deployed_at"
+        ],
+        "type": "object",
+        "properties": {
+          "tracebit_id": {
+            "type": "string"
+          },
+          "provider_id": {
+            "type": "string"
+          },
+          "provider_account_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "deployed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "aws": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AwsCanary"
+              }
+            ]
+          },
+          "okta": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/OktaCanary"
+              }
+            ]
+          },
+          "azure": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AzureCanary"
+              }
+            ]
+          }
+        }
+      },
+      "CanaryCredential": {
+        "required": [
+          "name",
+          "type",
+          "labels"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Label"
+            }
+          },
+          "aws": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AwsCanaryCredential"
+              }
+            ]
+          }
+        }
+      },
+      "Classification": {
+        "enum": [
+          "Unclassified",
+          "TruePositive",
+          "BenignPositive",
+          "FalsePositive"
+        ]
+      },
+      "ConfirmCredentialsRequest": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The confirmation ID for the deployed credentials",
+            "format": "uuid"
+          }
+        }
+      },
+      "DecoyTokenLabel": {
+        "required": [
+          "name",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "request": {
+            "$ref": "#/components/schemas/Request"
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            }
+          },
+          "outcome": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/EventOutcome"
+              }
+            ]
+          }
+        }
+      },
+      "EventOutcome": {
+        "required": [
+          "result"
+        ],
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "string"
+          },
+          "code": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "message": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "GetAlertLogsResponse": {
+        "required": [
+          "logs"
+        ],
+        "type": "object",
+        "properties": {
+          "logs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlertLogInformation"
+            },
+            "description": "A page of logs associated with the alert"
+          },
+          "next_page": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "URL for the next page of results"
+          }
+        }
+      },
+      "GoogleCloudPrincipal": {
+        "type": "object",
+        "properties": {
+          "federated_identity_type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "federated_identity_pool": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "federated_identity_subject": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "HttpCanaryCredentials": {
+        "required": [
+          "confirmationId",
+          "browserDeploymentId",
+          "hostNames",
+          "expiresAt",
+          "credentials"
+        ],
+        "type": "object",
+        "properties": {
+          "confirmationId": {
+            "type": "string",
+            "description": "The ID to use for confirming these credentials' deployment",
+            "format": "uuid"
+          },
+          "browserDeploymentId": {
+            "type": "string",
+            "description": "The ID of the browser deployment",
+            "format": "uuid"
+          },
+          "hostNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The hostnames for which these credentials are valid"
+          },
+          "expiresAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "The date when these credentials will expire",
+            "format": "date-time"
+          },
+          "credentials": {
+            "description": "The perimeter canary credentials",
+            "$ref": "#/components/schemas/JsonElement"
+          }
+        }
+      },
+      "IssueCredentialsRequest": {
+        "required": [
+          "name",
+          "source",
+          "sourceType"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "A name to identify the credentials"
+          },
+          "types": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "description": "The credential types to issue. Valid values are 'aws', 'ssh', 'gitlab-cookie', 'gitlab-username-password'"
+          },
+          "source": {
+            "type": "string",
+            "description": "The value for the 'source' label, representing the system used to deploy the credentials, for example 'custom' or 'script'"
+          },
+          "sourceType": {
+            "type": "string",
+            "description": "The value for the 'source_type' label, representing the type of system in which the credentials will be deployed, for example 'endpoint', 'container', 'ci/cd'"
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DecoyTokenLabel"
+            },
+            "description": "Additional label names and values for the credentials, typically metadata about how and where the credential is being deployed"
+          }
+        },
+        "example": {
+          "name": "home-canary",
+          "types": [
+            "aws",
+            "ssh"
+          ],
+          "source": "custom",
+          "sourceType": "endpoint",
+          "labels": [
+            {
+              "name": "machine",
+              "value": "home"
+            }
+          ]
+        }
+      },
+      "IssueCredentialsResponse": {
+        "type": "object",
+        "properties": {
+          "aws": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AwsCanaryCredentials"
+              }
+            ]
+          },
+          "ssh": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SshCanaryCredentials"
+              }
+            ]
+          },
+          "http": {
+            "type": "object",
+            "anyOf": [
+              {
+                "title": "gitlab-cookie",
+                "required": [
+                  "gitlab-cookie"
+                ],
+                "type": "object",
+                "properties": {
+                  "gitlab-cookie": {
+                    "$ref": "#/components/schemas/HttpCanaryCredentials"
+                  }
+                }
+              },
+              {
+                "title": "gitlab-username-password",
+                "required": [
+                  "gitlab-username-password"
+                ],
+                "type": "object",
+                "properties": {
+                  "gitlab-username-password": {
+                    "$ref": "#/components/schemas/HttpCanaryCredentials"
+                  }
+                }
+              }
+            ],
+            "description": "An object containing the perimeter canary credentials where the key is the credential type and the value is the HttpCanaryCredentials object. The schema of the 'credentials' value depends on the credential type."
+          }
+        }
+      },
+      "JsonElement": { },
+      "Label": {
+        "required": [
+          "name",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "ListAlertsResponse": {
+        "required": [
+          "alerts"
+        ],
+        "type": "object",
+        "properties": {
+          "alerts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlertInformation"
+            },
+            "description": "The alerts"
+          }
+        }
+      },
+      "OktaCanary": {
+        "required": [
+          "domain",
+          "organization_id"
+        ],
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "string"
+          }
+        }
+      },
+      "OktaPrincipal": {
+        "required": [
+          "id",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "alternate_id": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "Principal": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "aws": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AwsPrincipal"
+              }
+            ]
+          },
+          "okta": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/OktaPrincipal"
+              }
+            ]
+          },
+          "azure": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/AzurePrincipal"
+              }
+            ]
+          },
+          "google_cloud": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/GoogleCloudPrincipal"
+              }
+            ]
+          }
+        }
+      },
+      "Request": {
+        "type": "object",
+        "properties": {
+          "user_agent": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/UserAgent"
+              }
+            ]
+          },
+          "ip": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "Resource": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "Severity": {
+        "enum": [
+          "Info",
+          "Medium",
+          "High"
+        ]
+      },
+      "SshCanaryCredentials": {
+        "required": [
+          "sshConfirmationId",
+          "sshIp",
+          "sshPrivateKey",
+          "sshPublicKey",
+          "sshExpiration"
+        ],
+        "type": "object",
+        "properties": {
+          "sshConfirmationId": {
+            "type": "string",
+            "description": "The ID to use for confirming these credentials' deployment",
+            "format": "uuid"
+          },
+          "sshIp": {
+            "type": "string",
+            "description": "The IP address of the SSH server"
+          },
+          "sshPrivateKey": {
+            "type": "string",
+            "description": "Base64-encoded private key for connecting to the SSH server"
+          },
+          "sshPublicKey": {
+            "type": "string",
+            "description": "Base64-encoded public key of the SSH server"
+          },
+          "sshExpiration": {
+            "type": "string",
+            "description": "The date when these credentials will expire",
+            "format": "date-time"
+          }
+        }
+      },
+      "UserAgent": {
+        "required": [
+          "raw",
+          "label"
+        ],
+        "type": "object",
+        "properties": {
+          "raw": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "TracebitApiToken": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Canary Credentials"
+    },
+    {
+      "name": "Alerts"
+    }
+  ]
+}

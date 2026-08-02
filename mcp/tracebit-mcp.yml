@@ -1,0 +1,26 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/tracebit-community-openapi-original.json
+notes: >-
+  No official hosted/remote Tracebit MCP server was found (GitHub org
+  tracebit-com, npm, docs). Tracebit does publish an agent-facing surface — the
+  tracebit-canary-honeytokens-skill Agent Skill (see skills/) — but no MCP
+  server. Candidate tool list derived one-per-operation from the public
+  Community Edition OpenAPI.
+server:
+  name: tracebit
+  transport: http
+tools:
+- name: issue_credentials
+  description: Issue canary credentials of the requested types (aws, ssh, gitlab-cookie, gitlab-username-password)
+  source_operation: openapi/tracebit-community-openapi-original.json#IssueCredentials
+- name: confirm_credentials
+  description: Confirm the successful deployment of issued canary credentials by confirmationId
+  source_operation: openapi/tracebit-community-openapi-original.json#ConfirmCredentials
+- name: list_alerts
+  description: List canary alerts ordered by start time (up to 1000)
+  source_operation: openapi/tracebit-community-openapi-original.json#ListAlerts
+- name: get_alert_logs
+  description: Get the logs for an alert, cursor-paginated via beforeTime/beforeLog
+  source_operation: openapi/tracebit-community-openapi-original.json#GetAlertLogs

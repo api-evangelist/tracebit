@@ -1,0 +1,55 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tracebit-community-openapi-original.json
+docs: https://community.tracebit.com/api-docs
+notes: >-
+  Cross-cutting request/response semantics of the Tracebit Community API,
+  derived from the published OpenAPI 3.1.1 document. The enterprise docs host
+  (docs.tracebit.com) is login-gated, so only the public Community Edition
+  surface is captured. No idempotency-key mechanism is documented (write
+  operations use a two-phase issue/confirm pattern with a confirmationId
+  instead).
+authentication:
+  style: http-bearer
+  scheme: TracebitApiToken
+  detail: API token created in the Community portal, sent as a bearer token; per-operation permissions (see authentication/tracebit-authentication.yml)
+idempotency:
+  supported: false
+  detail: >-
+    No Idempotency-Key header or equivalent is declared. Credential issuance is
+    made safe via a two-phase flow — IssueCredentials returns a confirmationId
+    that must be confirmed with ConfirmCredentials after deployment.
+pagination:
+  styles:
+  - style: cursor
+    operations:
+    - GetAlertLogs
+    params:
+    - beforeTime
+    - beforeLog
+    response_fields:
+    - next_page
+    detail: next_page is a URL for the next page of alert-log results
+  - style: bounded-list
+    operations:
+    - ListAlerts
+    params:
+    - order
+    detail: Returns up to 1000 alerts ordered by start time; order=asc|desc (default desc)
+versioning:
+  scheme: uri-path
+  current: v1
+  detail: All paths are prefixed /api/v1/
+error_envelope:
+  format: plain-text
+  detail: 4xx errors return text/plain bodies (no problem+json); see errors/tracebit-problem-types.yml
+request_tracing: null
+field_expansion: null
+metadata:
+  supported: true
+  detail: Canary credentials accept arbitrary labels[] (name/value) plus required source and sourceType labels
+rate_limits: null
+cross_links:
+- errors/tracebit-problem-types.yml
+- authentication/tracebit-authentication.yml
+- lifecycle/tracebit-lifecycle.yml

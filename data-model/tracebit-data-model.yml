@@ -1,0 +1,110 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/tracebit-community-openapi-original.json
+notes: >-
+  Entity-relationship graph derived from the OpenAPI components.schemas $ref
+  links of the Tracebit Community API. Core domain: canaries (decoy resources),
+  canary credentials, and the alerts/logs raised when a canary is touched.
+entities:
+- name: Alert (AlertInformation)
+  id_field: id
+  detail: A detection incident; classified (Unclassified/TruePositive/BenignPositive/FalsePositive) with severity Info/Medium/High
+- name: AlertLog (AlertLogInformation)
+  id_field: id
+  detail: A single log line within an alert, tying together the canary, credential, principal, and event
+- name: Canary
+  id_field: tracebit_id
+  detail: A deployed decoy resource; provider-specific detail via aws/okta/azure sub-objects
+- name: CanaryCredential
+  detail: A decoy credential (e.g. AWS key) with labels and expiry
+- name: Principal
+  id_field: id
+  detail: The actor that touched a canary; provider-specific via aws/okta/azure/google_cloud sub-objects
+- name: Event
+  id_field: id
+  detail: The provider event (operation, request, resources, outcome) that triggered a log
+relationships:
+- from: Alert
+  to: AlertIndicatorInformation
+  type: has_many
+  via: indicators
+- from: AlertLog
+  to: Alert
+  type: belongs_to
+  via: alert_id
+- from: AlertLog
+  to: CanaryCredential
+  type: has_one
+  via: canary_credential
+- from: AlertLog
+  to: Canary
+  type: has_one
+  via: canary
+- from: AlertLog
+  to: Principal
+  type: has_one
+  via: principal
+- from: AlertLog
+  to: Event
+  type: has_one
+  via: event
+- from: Canary
+  to: AwsCanary
+  type: has_one
+  via: aws
+- from: Canary
+  to: OktaCanary
+  type: has_one
+  via: okta
+- from: Canary
+  to: AzureCanary
+  type: has_one
+  via: azure
+- from: CanaryCredential
+  to: Label
+  type: has_many
+  via: labels
+- from: CanaryCredential
+  to: AwsCanaryCredential
+  type: has_one
+  via: aws
+- from: Principal
+  to: AwsPrincipal
+  type: has_one
+  via: aws
+- from: Principal
+  to: OktaPrincipal
+  type: has_one
+  via: okta
+- from: Principal
+  to: AzurePrincipal
+  type: has_one
+  via: azure
+- from: Principal
+  to: GoogleCloudPrincipal
+  type: has_one
+  via: google_cloud
+- from: Event
+  to: Request
+  type: has_one
+  via: request
+- from: Event
+  to: Resource
+  type: has_many
+  via: resources
+- from: Event
+  to: EventOutcome
+  type: has_one
+  via: outcome
+- from: IssueCredentialsResponse
+  to: AwsCanaryCredentials
+  type: has_one
+  via: aws
+- from: IssueCredentialsResponse
+  to: SshCanaryCredentials
+  type: has_one
+  via: ssh
+- from: IssueCredentialsResponse
+  to: HttpCanaryCredentials
+  type: has_one
+  via: http

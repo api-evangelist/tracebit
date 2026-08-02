@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: searched
+probe: true
+url: https://trust.tracebit.com/
+platform: Vanta
+certifications: []
+notes: >-
+  Trust center verified live at trust.tracebit.com (page title "Tracebit Trust
+  Center", Vanta Trust Center platform detected in page source). The page body
+  is JS-rendered, so named certifications could not be extracted and none are
+  asserted here.
+evidence:
+- source: https://trust.tracebit.com/
+  kind: page-title
+  detail: '"Tracebit Trust Center" (HTTP 200)'
+- source: https://trust.tracebit.com/
+  kind: html-keyword
+  detail: vanta (trust-center platform)

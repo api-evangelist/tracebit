@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/tracebit-com
+notes: >-
+  Tracebit ships no language SDK client libraries on npm/PyPI/Maven/NuGet/
+  RubyGems/crates.io/pkg.go.dev — integration is via the REST API, the
+  Community CLI (platform installers on GitHub Releases), and a GitHub Action.
+  The npm package named "tracebit" (publisher simon39soft) is an unrelated
+  third-party project, not first-party, and is excluded.
+packages:
+- language: cli
+  registry: github-releases
+  name: tracebit-community-cli
+  url: https://github.com/tracebit-com/tracebit-community-cli/releases
+  install: Download the platform installer from GitHub Releases (Windows/macOS/Linux)
+  official: true
+- language: github-action
+  registry: github
+  name: tracebit-community-action
+  url: https://github.com/tracebit-com/tracebit-community-action
+  install: Reference tracebit-com/tracebit-community-action in a GitHub workflow
+  official: true
