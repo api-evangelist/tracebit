@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tracebit Alerts API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Alerts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Alerts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://community.tracebit.com/api/v1/alerts",
+            "params": [
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction by start time. 'desc' (default) returns newest first, 'asc' returns oldest first."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List alerts ordered by start time. Returns up to 1000 alerts.\n\nRequired permission: `alerts:all:list`."
+        },
+        {
+          "info": {
+            "name": "Get Alert Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://community.tracebit.com/api/v1/alerts/:id/logs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier for the alert."
+              },
+              {
+                "name": "beforeTime",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "beforeLog",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get an alert's logs\n\nRequired permission: `alerts:all:get`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

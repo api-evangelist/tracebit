@@ -1,0 +1,442 @@
+{
+  "item": [
+    {
+      "id": "0572006c-a1d4-4e3b-a720-acb9a931793f",
+      "name": "Alerts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c66281c7-6164-4dd7-8122-a3aac2c37207",
+          "name": "List Alerts",
+          "request": {
+            "name": "List Alerts",
+            "description": {
+              "content": "List alerts ordered by start time. Returns up to 1000 alerts.\n\nRequired permission: `alerts:all:list`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "alerts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Sort direction by start time. 'desc' (default) returns newest first, 'asc' returns oldest first."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "efbfecad-fa47-4d25-be2a-8ea24c72a1ae",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "alerts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"alerts\": [\n    {\n      \"id\": \"string\",\n      \"start_time\": \"1961-03-01T04:52:11.830Z\",\n      \"end_time\": null,\n      \"classification\": \"string\",\n      \"classification_reason\": null,\n      \"severity\": \"string\",\n      \"provider\": \"string\",\n      \"provider_account_id\": \"string\",\n      \"title\": \"string\",\n      \"tracebit_portal_url\": \"string\",\n      \"logs_url\": null,\n      \"indicators\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"details\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_1\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_2\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_3\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"details\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_1\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"start_time\": \"2017-04-02T06:18:49.765Z\",\n      \"end_time\": null,\n      \"classification\": \"string\",\n      \"classification_reason\": null,\n      \"severity\": \"string\",\n      \"provider\": \"string\",\n      \"provider_account_id\": \"string\",\n      \"title\": \"string\",\n      \"tracebit_portal_url\": \"string\",\n      \"logs_url\": null,\n      \"indicators\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"details\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_1\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_2\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_3\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"details\": {\n            \"key_0\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_1\": [\n              \"string\",\n              \"string\"\n            ],\n            \"key_2\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65b65c7d-22a3-4e1c-adc1-d7d73a07b8e0",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "alerts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bed08742-93ea-4883-800d-ec8f90e8c178",
+          "name": "Get Alert Logs",
+          "request": {
+            "name": "Get Alert Logs",
+            "description": {
+              "content": "Get an alert's logs\n\nRequired permission: `alerts:all:get`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "alerts",
+                ":id",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "beforeTime",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeLog",
+                  "value": "<uuid>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier for the alert."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8578b113-6f14-4a02-9991-6f2fb34869f5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "alerts",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "beforeTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "beforeLog",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier for the alert."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"logs\": [\n    {\n      \"id\": \"string\",\n      \"alert_id\": \"string\",\n      \"timestamp\": \"2006-08-06T22:30:48.241Z\",\n      \"severity\": \"string\",\n      \"canary_credential\": null,\n      \"canary\": null,\n      \"principal\": null,\n      \"event\": null\n    },\n    {\n      \"id\": \"string\",\n      \"alert_id\": \"string\",\n      \"timestamp\": \"1966-11-03T16:06:21.972Z\",\n      \"severity\": \"string\",\n      \"canary_credential\": null,\n      \"canary\": null,\n      \"principal\": null,\n      \"event\": null\n    }\n  ],\n  \"next_page\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b787d85e-427c-45ad-8986-7820393efe17",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "alerts",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "beforeTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "beforeLog",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier for the alert."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3a58b84d-92af-4c17-9361-6f93192212d5",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "alerts",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "beforeTime",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "beforeLog",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier for the alert."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://community.tracebit.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1a651d07-8492-495e-83ed-9c31e13c5c92",
+    "name": "Tracebit Alerts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for interacting with the Tracebit platform.",
+      "type": "text/plain"
+    }
+  }
+}
