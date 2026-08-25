@@ -5,7 +5,7 @@
       "source": "https://tracebit.com/feed.xml",
       "feed_url": "https://tracebit.com/feed.xml",
       "title": "",
-      "saved": 1,
+      "saved": 0,
       "method": "feed"
     },
     {
@@ -16,6 +16,6 @@
       "method": "discovered"
     }
   ],
-  "post_count": 44,
-  "fetched": "2026-08-15T12:11:08Z"
+  "post_count": 45,
+  "fetched": "2026-08-22T20:20:02Z"
 }
