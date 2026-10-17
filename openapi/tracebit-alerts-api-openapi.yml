@@ -91,93 +91,36 @@ paths:
       - TracebitApiToken: []
 components:
   schemas:
-    Principal:
+    AwsPrincipal:
       required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-        aws:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/AwsPrincipal'
-        okta:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/OktaPrincipal'
-        azure:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/AzurePrincipal'
-        google_cloud:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/GoogleCloudPrincipal'
-    AwsCanaryCredential:
-      required:
-      - access_key_id
-      type: object
-      properties:
-        access_key_id:
-          type: string
-    Label:
-      required:
-      - name
-      - value
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-    Classification:
-      enum:
-      - Unclassified
-      - TruePositive
-      - BenignPositive
-      - FalsePositive
-    OktaPrincipal:
-      required:
-      - id
       - type
       type: object
       properties:
-        id:
-          type: string
-        alternate_id:
+        account_id:
           type:
           - 'null'
           - string
         type:
           type: string
-    CanaryCredential:
-      required:
-      - name
-      - type
-      - labels
-      type: object
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        issued_at:
-          type: string
-          format: date-time
-        expires_at:
+        arn:
           type:
           - 'null'
           - string
-          format: date-time
-        labels:
-          type: array
-          items:
-            $ref: '#/components/schemas/Label'
-        aws:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/AwsCanaryCredential'
+        username:
+          type:
+          - 'null'
+          - string
+    AzurePrincipal:
+      type: object
+      properties:
+        app_id:
+          type:
+          - 'null'
+          - string
+        tenant_id:
+          type:
+          - 'null'
+          - string
     AlertInformation:
       type: object
       properties:
@@ -215,30 +158,103 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AlertIndicatorInformation'
-    Request:
+    Label:
+      required:
+      - name
+      - value
       type: object
       properties:
-        user_agent:
+        name:
+          type: string
+        value:
+          type: string
+    AlertLogInformation:
+      type: object
+      properties:
+        id:
+          type: string
+        alert_id:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        severity:
+          $ref: '#/components/schemas/Severity'
+        canary_credential:
           oneOf:
           - type: 'null'
-          - $ref: '#/components/schemas/UserAgent'
-        ip:
+          - $ref: '#/components/schemas/CanaryCredential'
+        canary:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Canary'
+        principal:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Principal'
+        event:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Event'
+    ListAlertsResponse:
+      required:
+      - alerts
+      type: object
+      properties:
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertInformation'
+          description: The alerts
+    Classification:
+      enum:
+      - Unclassified
+      - TruePositive
+      - BenignPositive
+      - FalsePositive
+    Resource:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+        type:
           type:
           - 'null'
           - string
-    AzureCanary:
+    OktaPrincipal:
       required:
-      - subscription_id
-      - subscription_name
-      - resource_id
+      - id
+      - type
       type: object
       properties:
-        subscription_id:
+        id:
           type: string
-        subscription_name:
+        alternate_id:
+          type:
+          - 'null'
+          - string
+        type:
           type: string
-        resource_id:
+    AwsCanary:
+      required:
+      - account_id
+      - account_name
+      - arn
+      - region
+      type: object
+      properties:
+        account_id:
           type: string
+        account_name:
+          type: string
+        arn:
+          type: string
+        region:
+          type:
+          - 'null'
+          - string
     AlertIndicatorInformation:
       required:
       - id
@@ -260,33 +276,6 @@ components:
             type: array
             items:
               type: string
-    Resource:
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type:
-          - 'null'
-          - string
-    Severity:
-      enum:
-      - Info
-      - Medium
-      - High
-    AzurePrincipal:
-      type: object
-      properties:
-        app_id:
-          type:
-          - 'null'
-          - string
-        tenant_id:
-          type:
-          - 'null'
-          - string
     Canary:
       required:
       - tracebit_id
@@ -322,16 +311,17 @@ components:
           oneOf:
           - type: 'null'
           - $ref: '#/components/schemas/AzureCanary'
-    OktaCanary:
-      required:
-      - domain
-      - organization_id
+    Request:
       type: object
       properties:
-        domain:
-          type: string
-        organization_id:
-          type: string
+        user_agent:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UserAgent'
+        ip:
+          type:
+          - 'null'
+          - string
     Event:
       type: object
       properties:
@@ -349,34 +339,13 @@ components:
           oneOf:
           - type: 'null'
           - $ref: '#/components/schemas/EventOutcome'
-    AwsCanary:
+    AwsCanaryCredential:
       required:
-      - account_id
-      - account_name
-      - arn
-      - region
+      - access_key_id
       type: object
       properties:
-        account_id:
+        access_key_id:
           type: string
-        account_name:
-          type: string
-        arn:
-          type: string
-        region:
-          type:
-          - 'null'
-          - string
-    ListAlertsResponse:
-      required:
-      - alerts
-      type: object
-      properties:
-        alerts:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertInformation'
-          description: The alerts
     UserAgent:
       required:
       - raw
@@ -387,64 +356,79 @@ components:
           type: string
         label:
           type: string
-    EventOutcome:
+    AzureCanary:
       required:
-      - result
+      - subscription_id
+      - subscription_name
+      - resource_id
       type: object
       properties:
-        result:
+        subscription_id:
           type: string
-        code:
+        subscription_name:
+          type: string
+        resource_id:
+          type: string
+    OktaCanary:
+      required:
+      - domain
+      - organization_id
+      type: object
+      properties:
+        domain:
+          type: string
+        organization_id:
+          type: string
+    CanaryCredential:
+      required:
+      - name
+      - type
+      - labels
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        issued_at:
+          type: string
+          format: date-time
+        expires_at:
           type:
           - 'null'
           - string
-        message:
-          type:
-          - 'null'
-          - string
-    AlertLogInformation:
+          format: date-time
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Label'
+        aws:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/AwsCanaryCredential'
+    Principal:
+      required:
+      - id
       type: object
       properties:
         id:
           type: string
-        alert_id:
-          type: string
-        timestamp:
-          type: string
-          format: date-time
-        severity:
-          $ref: '#/components/schemas/Severity'
-        canary_credential:
+        aws:
           oneOf:
           - type: 'null'
-          - $ref: '#/components/schemas/CanaryCredential'
-        canary:
+          - $ref: '#/components/schemas/AwsPrincipal'
+        okta:
           oneOf:
           - type: 'null'
-          - $ref: '#/components/schemas/Canary'
-        principal:
+          - $ref: '#/components/schemas/OktaPrincipal'
+        azure:
           oneOf:
           - type: 'null'
-          - $ref: '#/components/schemas/Principal'
-        event:
+          - $ref: '#/components/schemas/AzurePrincipal'
+        google_cloud:
           oneOf:
           - type: 'null'
-          - $ref: '#/components/schemas/Event'
-    GetAlertLogsResponse:
-      required:
-      - logs
-      type: object
-      properties:
-        logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/AlertLogInformation'
-          description: A page of logs associated with the alert
-        next_page:
-          type:
-          - 'null'
-          - string
-          description: URL for the next page of results
+          - $ref: '#/components/schemas/GoogleCloudPrincipal'
     GoogleCloudPrincipal:
       type: object
       properties:
@@ -460,25 +444,41 @@ components:
           type:
           - 'null'
           - string
-    AwsPrincipal:
+    EventOutcome:
       required:
-      - type
+      - result
       type: object
       properties:
-        account_id:
-          type:
-          - 'null'
-          - string
-        type:
+        result:
           type: string
-        arn:
+        code:
           type:
           - 'null'
           - string
-        username:
+        message:
           type:
           - 'null'
           - string
+    Severity:
+      enum:
+      - Info
+      - Medium
+      - High
+    GetAlertLogsResponse:
+      required:
+      - logs
+      type: object
+      properties:
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlertLogInformation'
+          description: A page of logs associated with the alert
+        next_page:
+          type:
+          - 'null'
+          - string
+          description: URL for the next page of results
   securitySchemes:
     TracebitApiToken:
       type: http
