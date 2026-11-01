@@ -64,6 +64,118 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Tracebit is a company surfaced as a portfolio company of accel and added to the API Evangelist network as a stub for enrichment. Sector: cloud-saas. This profile is a lead awaiting the enrichment pipeline.
+Tracebit is a security-canary (deception) platform backed by Accel. It deploys realistic decoy credentials, secrets, and identities — canaries — across AWS, Azure, Google Cloud, Okta, Kubernetes, CI/CD pipelines, and workstations, and raises high-fidelity alerts the moment an attacker touches one during lateral movement or credential access. The free Community Edition exposes a public REST API (OpenAPI 3.1) for issuing and confirming canary credentials and reading alerts and their logs, alongside an open-source CLI, a GitHub Action, and a provider-published Agent Skill.
 
-Backed by: accel — https://tracebit.com/
+**Areas:** Company · Cloud Saas · Security · Deception · Canary Tokens · Threat Detection · Cloud Security · Incident Response
+
+## Tracebit on APIs.io
+
+Everything profiled for Tracebit is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/tracebit/](https://apis.io/providers/tracebit/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Tracebit Alerts API](https://apis.io/apis/tracebit/tracebit-alerts-api/) — The Alerts API from Tracebit — 2 operation(s) for alerts.
+- [Tracebit Canary Credentials API](https://apis.io/apis/tracebit/tracebit-canary-credentials-api/) — The Canary Credentials API from Tracebit — 2 operation(s) for canary credentials.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [tracebit](https://apis.io/servers/tracebit/tracebit/)
+
+#### Collections (2)
+
+Postman and Open Collection request collections.
+
+- [Tracebit Alerts API](https://apis.io/collections/tracebit/open-tracebit-alerts-api/)
+- [Tracebit Alerts Canary Credentials API](https://apis.io/collections/tracebit/open-tracebit-canary-credentials-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Tracebit Community Overlay](https://apis.io/overlays/tracebit/tracebit-community-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Tracebit Authentication](https://apis.io/security/tracebit/tracebit-authentication/)
+- [Tracebit Domain Security](https://apis.io/security/tracebit/tracebit-domain-security/)
+- [Tracebit Trust Center](https://apis.io/security/tracebit/tracebit-trust-center/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://tracebit.com/)
+- [Documentation](https://community.tracebit.com/api-docs/)
+- [Getting started](https://github.com/tracebit-com/tracebit-community-cli#getting-started)
+- [API reference](https://community.tracebit.com/api-docs/)
+- [Pricing](https://tracebit.com/pricing)
+- [Sign up](https://community.tracebit.com/join)
+- [Support](https://tracebit.com/contact)
+- [Blog](https://tracebit.com/blog)
+- [Terms of service](https://tracebit.com/legal/terms-and-conditions)
+- [Privacy policy](https://tracebit.com/legal/privacy-policy)
+- [GitHub](https://github.com/tracebit-com)
+- [Status](https://status.tracebit.com/)
+
+## API Evangelist rating
+
+**Kin Score 45.7** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 50.8 |
+| Contract governance | 4.5 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 61.9 |
+| Access clarity | 39.5 |
+
+**Agent readiness 25.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 29.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/tracebit/](https://apis.io/providers/tracebit/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Tracebit: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/tracebit/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
